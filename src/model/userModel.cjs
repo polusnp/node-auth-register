@@ -28,7 +28,7 @@ const userSchema = new Schema(
                     return /^[a-zA-Z0-9]{8,}$/.test(value);
                 },
                 message: () =>
-                    `Password must be at least 6 characters long and contain only letters and numbers`,
+                    `Password must be at least 8 characters long and contain only letters and numbers`,
             },
         },
     },
