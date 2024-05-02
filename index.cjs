@@ -1,6 +1,7 @@
 const express = require('express');
 const usersRouter = require('./src/routes/usersRouter.cjs');
 const moviesRouter = require('./src/routes/moviesRouter.cjs');
+const authRouter = require('./src/routes/authRouter.cjs');
 require('dotenv').config();
 const handleNotFound = require('./src/errorHandlers/notFoundErrorHandler.cjs');
 const handleGlobalErrors = require('./src/errorHandlers/globalErrorHandler.cjs');
@@ -9,6 +10,7 @@ const { connectDataBase } = require('./src/dataBase/connectionMongoDb.cjs');
 const app = express();
 
 app.use(express.json());
+app.use('/auth', authRouter);
 app.use('/users', usersRouter);
 app.use('/movies', moviesRouter);
 

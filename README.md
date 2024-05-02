@@ -1,34 +1,20 @@
-# Movie & User Management System CRUD RESTful API
+# User Management System CRUD RESTful API
 
 npm start
 npm run dev
 
-This project is a Movie & User Management System built using Express.js and MongoDB. It provides CRUD (Create, Read, Update, Delete) operations for managing movies and users.
+This is a simple RESTful API built with Express.js for managing users and movies. It provides endpoints for user authentication, user management, and movie management.
 
 ## Features
 
-Movies:
-View all movies
-View details of a specific movie.
-Users:
-Get a list of all users.
-Get data of a single user by their ID. If the user is found, return the user object in JSON format. Otherwise, return a JSON object { "message": "Not found user with id <userId>" } with a status code of 404.
-Create a new user. The user object must contain fields: name, email, phone, age. The id field should be generated automatically. All fields must be validated. Return the created user object with a status code of 201.
-Update user data. All fields that come in the request body are optional. If the user to be updated by ID is not found, return a JSON object { "message": "Not found user with id <userId>" } with a status code of 404. Otherwise, return the updated user object with a status code of 200.
-Delete a user. If the user to be deleted by ID is not found, return a JSON object { "message": "Not found user with id <userId>" } with a status code of 404. Otherwise, return a status code of 204.
-Middleware should be used for validating the request body of the message object.
+-   User registration and login with JWT authentication
+-   CRUD operations for users
+-   Fetching all movies and retrieving a single movie by ID
 
-## API Endpoints
+## Requirements
 
-Movies
-GET /movies: Get all movies
-GET /movies/:id: Get details of a specific movie
-Users
-GET /users: Get all users
-GET /users/:id: Get details of a specific user
-POST /users: Add a new user
-PUT /users/:id: Update user details
-DELETE /users/:id: Delete a user
+-   Node.js
+-   MongoDB
 
 ## Technologies Used
 
@@ -41,10 +27,49 @@ DELETE /users/:id: Delete a user
 -   **Git**: A version control system used for tracking changes in the project's source code.
 -   **GitHub**: A platform for hosting Git repositories and collaborating on software development projects.
 
+## Access the API endpoints using a tool like Postman or cURL:
+
+User authentication: POST /auth/login, POST /auth/register
+User management: GET /users, GET /users/current
+Movie management: GET /movies, GET /movies/:id
+
+## Project Structure
+
+markdown
+Copy code
+
+-   src/
+    -   controllers/
+        -   authController.js
+        -   moviesController.js
+        -   usersController.js
+    -   dataBase/
+        -   connectionMongoDb.js
+    -   errorHandlers/
+        -   globalErrorHandler.js
+        -   notFoundErrorHandler.js
+    -   middlewares/
+        -   authGuard.js
+        -   usersValidations.js
+    -   model/
+        -   userModel.js
+    -   routes/
+        -   authRouter.js
+        -   moviesRouter.js
+        -   usersRouter.js
+    -   services/
+        -   authService.js
+        -   moviesService.js
+        -   userService.js
+-   .env.example
+-   .gitignore
+-   package.json
+-   server.js
+
 ## Contributing
 
 Contributions are welcome! If you have any ideas, suggestions, or found any issues, feel free to open an issue or create a pull request.
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the LICENSE file for details.
