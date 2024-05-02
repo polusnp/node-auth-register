@@ -1,28 +1,48 @@
 const Joi = require('joi');
 const { statusCode } = require('../helpers/constants.cjs');
 
-const userSchema = Joi.object({
-    name: Joi.string()
+const createUserSchema = Joi.object({
+    firstName: Joi.string()
         .required()
         .min(2)
-        .max(50)
-        .pattern(/^[A-Za-z\s]+$/)
-        .label('Valid name (letters and spaces only, 2-50 characters)'),
+        .max(30)
+        .pattern(/^[A-Za-z]+$/)
+        .label('Valid first name (letters only, no spaces, 2-30 characters)'),
+    lastName: Joi.string()
+        .required()
+        .min(2)
+        .max(30)
+        .pattern(/^[A-Za-z]+$/)
+        .label('Valid last name (letters only, no spaces, 2-30 characters)'),
     email: Joi.string()
-        .email()
+        .email({
+            minDomainSegments: 2,
+            tlds: { allow: false },
+        })
         .required()
         .regex(/.*@.*\.com$/)
-        .label('Valid email address'),
-    phone: Joi.string()
+        .label('Invalid credentials'),
+    password: Joi.string()
         .required()
-        .regex(/^\+?\d{1,3}\s?\(?\d{3}\)?[-\s]?\d{3}[-\s]?\d{4}$/)
-        .label('Valid phone number'),
-    age: Joi.number()
-        .integer()
-        .min(0)
-        .max(200)
+        .min(8)
+        .pattern(new RegExp('^[a-zA-Z0-9]{8,}$'))
+        .label('Invalid credentials'),
+});
+
+const credentialUserSchema = Joi.object({
+    email: Joi.string()
+        .email({
+            minDomainSegments: 2,
+            tlds: { allow: false },
+        })
         .required()
-        .label('Valid age between 0 and 200 years'),
+        .regex(/.*@.*\.com$/)
+        .label('Invalid credentials'),
+    password: Joi.string()
+        .required()
+        .min(8)
+        .pattern(new RegExp('^[a-zA-Z0-9]{8,}$'))
+        .label('Invalid credentials'),
 });
 
 const validateData = (schema) => {
@@ -37,4 +57,8 @@ const validateData = (schema) => {
     };
 };
 
-module.exports = { userSchema, validateData };
+module.exports = {
+    validateData,
+    credentialUserSchema,
+    createUserSchema,
+};

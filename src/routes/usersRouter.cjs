@@ -1,22 +1,13 @@
 const express = require('express');
 const usersRouter = express.Router();
-const {
-    validateData,
-    userSchema,
-} = require('../middlewares/usersValidations.cjs');
+const { authGuard } = require('../middlewares/authGuard.cjs');
 
 const {
+    getCurrentUserHandler,
     getAllUsersHandler,
-    getOneUserHandler,
-    postNewUserHandler,
-    putOneUserHandler,
-    deleteUserHandler,
 } = require('../controllers/usersController.cjs');
 
+usersRouter.get('/current', authGuard, getCurrentUserHandler);
 usersRouter.get('/', getAllUsersHandler);
-usersRouter.get('/:id', getOneUserHandler);
-usersRouter.post('/', validateData(userSchema), postNewUserHandler);
-usersRouter.put('/:id', validateData(userSchema), putOneUserHandler);
-usersRouter.delete('/:id', deleteUserHandler);
 
 module.exports = usersRouter;
